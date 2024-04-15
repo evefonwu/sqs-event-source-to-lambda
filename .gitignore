@@ -8,3 +8,13 @@ __pycache__
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# DS_Store
+.DS_Store
+
+# vscode extensions
+.vscode
+
+# env
+.env 
+
