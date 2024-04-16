@@ -1,8 +1,8 @@
-# Lambda Event Source Mapping Polling SQS Messages Demo
+# EDA Point-to-point Messaging: SQS Event Source to Lambda Function Demo
 
 This is the source code for the demo described in this post:
 
-<>Demo
+EDA Point-to-point Messaging: SQS Event Source to Lambda Function Demo
 
 ## To Deploy this CDKv2 Python Application
 

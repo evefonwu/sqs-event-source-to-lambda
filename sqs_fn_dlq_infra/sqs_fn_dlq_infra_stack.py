@@ -15,23 +15,20 @@ class SqsFnDlqInfraStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         '''
-        Original message queue 
-        - with a DLQ to store undeliverable messages 
+        Message SQS queue with a DLQ
         '''
         message_dql = sqs.DeadLetterQueue(
             max_receive_count=10,
             queue=sqs.Queue(self, 'MessageDQLQueue', 
                 retention_period=Duration.days(14))
         )
-        original_queue = sqs.Queue(self, "OriginalQueue",
+        message_queue = sqs.Queue(self, "MessageQueue",
             visibility_timeout=Duration.seconds(300),
-            dead_letter_queue=message_dql,
-            # sqs properties, default batch_size 10
+            dead_letter_queue=message_dql,                
         )
         
         '''
-        processor lambda function
-        - with sqsEventSource to poll SQS messages for lambda to process
+        Function with sqsEventSource to poll for SQS messages 
         '''
         current_dir = os.path.dirname(__file__)
         lambdaDirectory = os.path.join(current_dir, '../lambda')                
@@ -42,11 +39,38 @@ class SqsFnDlqInfraStack(Stack):
             runtime=_lambda.Runtime.PYTHON_3_12,
             retry_attempts=2, 
             environment={
-                'MESSAGE_QUEUE_URL': original_queue.queue_url
+                'MESSAGE_QUEUE_URL': message_queue.queue_url
             }
         )
 
-        processorFn.add_event_source(lambda_es.SqsEventSource(original_queue))
+        processorFn.add_event_source(lambda_es.SqsEventSource(message_queue))
 
-        # lambda FunctionURL to simulat sending a message to the original queue
-        # CfnOutput(self, "")
+        '''
+        FunctionURL to simulate sending a message to the queue
+        '''
+        sender_fn = _lambda.Function(self, "SenderFn",
+            code=_lambda.Code.from_asset(lambdaDirectory),
+            handler="sender.lambda_handler",
+            runtime=_lambda.Runtime.PYTHON_3_12,
+            environment={
+                'SQS_QUEUE_URL': message_queue.queue_url
+            }
+        )        
+        fn_url = sender_fn.add_function_url(
+            auth_type=_lambda.FunctionUrlAuthType.NONE,
+            cors=_lambda.FunctionUrlCorsOptions(
+                allowed_origins=["*"], 
+                allowed_methods=[_lambda.HttpMethod.ALL],
+                allowed_headers=["*"]
+            )
+        )
+
+        '''
+        Permissions for sender_fn to send messages to the queue
+        '''
+        message_queue.grant_send_messages(sender_fn)
+
+        '''
+        CfnOutputs
+        '''
+        CfnOutput(self, "SenderFn_URL", value=fn_url.url)

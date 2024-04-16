@@ -2,10 +2,9 @@ import boto3
 import os 
 
 '''
-This lambda receives messages polled from an SQS event source.
-
-Message queue is a standard queue with at least once delivery.
-This lambda the message after processing to prevent duplicate processing.
+This lambda receives messages polled from an SQS event source 
+and deletes the message from the queue after logging out the
+message payload.
 '''
 
 sqs = boto3.client('sqs')
@@ -26,8 +25,8 @@ def lambda_handler(event, context):
         'ReceiptHandle': receipt_handle,
       }
       sqs.delete_message(**params)
+    
+  else: 
+    print('Lambda triggered to execute but there are no SQS records')
 
-    return "success"
-      
-  print('Lambda triggered to execute but there are no SQS records')
   
