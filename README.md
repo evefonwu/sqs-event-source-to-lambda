@@ -4,9 +4,11 @@ This is the CDK Python Application source code for the demo described in this po
 
 SQS Event Source to Lambda Function Demo
 
-Pre-requisites. For system requirements to deploy CDK applications, check out: [Tutorials](https://docs.aws.amazon.com/cdk/v2/guide/serverless_example.html)
-
 ## Steps
+
+### Requirements
+
+For system requirements to deploy CDK applications, check out: [Tutorials](https://docs.aws.amazon.com/cdk/v2/guide/serverless_example.html)
 
 ### Clone the repository
 
