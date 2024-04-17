@@ -2,7 +2,7 @@
 
 This is the CDK Python Application source code for the demo described in this post:
 
-EDA Point-to-point Messaging: SQS Event Source to Lambda Function Demo
+[EDA Point-to-point Messaging: SQS Event Source to Lambda Function Demo](https://dev.to/evefonwu/eda-messaging-sqs-event-source-to-lambda-function-demo-30gb)
 
 ## Steps
 
