@@ -8,7 +8,10 @@ This is the CDK Python Application source code for the demo described in this po
 
 ### Requirements
 
-For system requirements to deploy CDK applications, check out: [Tutorials](https://docs.aws.amazon.com/cdk/v2/guide/serverless_example.html)
+Requirements for any CDK app, in general, check out: [Getting Started with the AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
+
+Specific to CDK apps in Python: [Working with the AWS CDK in Python
+](https://docs.aws.amazon.com/cdk/v2/guide/work-with-cdk-python.html)
 
 ### Clone the repository
 
