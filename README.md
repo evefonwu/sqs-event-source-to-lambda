@@ -1,8 +1,6 @@
 # SQS Event Source to Lambda Function Demo
 
-This is the CDK Python Application source code for the demo described in this post:
-
-[EDA Point-to-point Messaging: SQS Event Source to Lambda Function Demo](https://dev.to/evefonwu/eda-messaging-sqs-event-source-to-lambda-function-demo-30gb)
+Demo of Amazon Simple Queue Service (SQS) queue as event source to an AWS Lambda function.
 
 ## Steps
 
@@ -46,3 +44,7 @@ Initiate deploying to the default AWS account/region configured with the AWS CLI
 ```sh
 cdk deploy
 ```
+
+## Blog post and Resource links:
+
+[EDA Messaging: SQS Event Source to Lambda Function Demo](https://dev.to/evefonwu/eda-messaging-sqs-event-source-to-lambda-function-demo-30gb)
